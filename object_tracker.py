@@ -133,6 +133,7 @@ def main(_argv):
     enter_frame=init_array(max_v,-1)
     exit_frame=init_array(max_v,-1)
     mf=init_array(max_v,0)
+    prev=init_array(max_v,15000)
     max_tid=-1
 
     print("resolution is "+ str(height) + " x " + str(width) + "\n")
@@ -264,15 +265,16 @@ def main(_argv):
             if FLAGS.info:
                 print("Tracker ID: {}, Class: {},  BBox Coords (xmin, ymin, xmax, ymax): {}".format(str(track.track_id), class_name, (int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3]))))
             tid=track.track_id
-            ymin=bbox[1]
+            ymin=bbox[3]
             if(tid<max_v):
-                if(mf[tid]==0 and ymin>=line1):
+                if(mf[tid]==0 and ymin>=line1 and prev[tid]<line1):
                     mf[tid]=1
                     enter_frame[tid]=frame_num
-                if(mf[tid]==1 and ymin>=line2):
+                if(mf[tid]==1 and ymin>=line2 and prev[tid]<line2):
                     mf[tid]=2
                     exit_frame[tid]=frame_num
                     max_tid=max(max_tid,tid)
+                prev[tid]=ymin
 
         
         # calculate frames per second of running detections
