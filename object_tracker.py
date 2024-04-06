@@ -67,8 +67,8 @@ def main(_argv):
     
     #distance and pixel line declarations
     dist=100
-    line1=500
-    line2=1000
+    line1=400
+    line2=800
     
     # Definition of the parameters
     max_cosine_distance = 0.4
