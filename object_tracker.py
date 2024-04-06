@@ -60,9 +60,16 @@ def print_speeds(max_v,max_tid,dist,enter_frame,exit_frame,mf,mfps):
             speed=get_speed(dist,enter_frame[j],exit_frame[j],mfps)
             print("speed of vehicle id : "+str(j) + " is " + str(speed) + "\n")
         j=j+1
-        
+
+
 def main(_argv):
     print("halo :D test 2\n")
+    
+    #distance and pixel line declarations
+    dist=100
+    line1=500
+    line2=1000
+    
     # Definition of the parameters
     max_cosine_distance = 0.4
     nn_budget = None
@@ -127,9 +134,6 @@ def main(_argv):
     exit_frame=init_array(max_v,-1)
     mf=init_array(max_v,0)
     max_tid=-1
-    dist=100
-    line1=500
-    line2=1000
 
     print("resolution is "+ str(height) + " x " + str(width) + "\n")
     print("fps is " + str(mfps) + "\n")
