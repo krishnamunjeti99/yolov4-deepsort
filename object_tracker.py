@@ -267,10 +267,10 @@ def main(_argv):
             tid=track.track_id
             ymin=bbox[3]
             if(tid<max_v):
-                if(mf[tid]==0 and ymin>=line1 and prev[tid]<line1):
+                if(mf[tid]==0 and ymin>=line1 and prev[tid]<=line1):
                     mf[tid]=1
                     enter_frame[tid]=frame_num
-                if(mf[tid]==1 and ymin>=line2 and prev[tid]<line2):
+                if(mf[tid]==1 and ymin>=line2 and prev[tid]<=line2):
                     mf[tid]=2
                     exit_frame[tid]=frame_num
                     max_tid=max(max_tid,tid)
