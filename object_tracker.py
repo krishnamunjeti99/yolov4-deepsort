@@ -38,6 +38,25 @@ flags.DEFINE_boolean('dont_show', False, 'dont show video output')
 flags.DEFINE_boolean('info', False, 'show detailed info of tracked objects')
 flags.DEFINE_boolean('count', False, 'count objects being tracked on screen')
 
+def get_speed(dist,frame1,frame2,fps):
+    t=frame2-frame1
+    speed=(dist*fps)/t
+    return speed
+
+def init_array(n,k):
+    arr=[]
+    j=0
+    while(j<n):
+        arr.append(k)
+        j=j+1
+    return arr
+    
+def print_speeds(max_v,max_tid,dist,enter_frame,exit_frame,mf,mfps):
+    j=0
+    while(j<max_v and j<=max_tid):
+        if(mf[tid]==2):
+            speed=get_speed(dist,enter_frame[tid],exit_frame[tid],mfps)
+            print("speed of vehicle id : "+str(tid) + " is " + str(speed) + "\n")
 def main(_argv):
     print("halo :D test 2\n")
     # Definition of the parameters
@@ -92,6 +111,23 @@ def main(_argv):
         out = cv2.VideoWriter(FLAGS.output, codec, fps, (width, height))
 
     frame_num = 0
+    
+    
+    # my_vars
+
+    width = int(vid.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    mfps = int(vid.get(cv2.CAP_PROP_FPS))
+    max_v=100000
+    enter_frame=init_array(max_v,-1)
+    exit_frame=init_array(max_v,-1)
+    mf=init_array(max_v,0)
+    max_tid=-1
+    dist=0.5
+    line1=500
+    line2=1000
+
+    print("resolution is "+ str(height) + " x " + str(width) + "\n")
     # while video is running
     while True:
         return_value, frame = vid.read()
@@ -218,7 +254,18 @@ def main(_argv):
         # if enable info flag then print details about each track
             if FLAGS.info:
                 print("Tracker ID: {}, Class: {},  BBox Coords (xmin, ymin, xmax, ymax): {}".format(str(track.track_id), class_name, (int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3]))))
+            tid=track.track_id
+            ymin=bbox[1]
+            if(tid<max_v):
+                if(mf[tid]==0 and ymin>=line1):
+                    mf[tid]=1
+                    enter_frame[tid]=frame_num
+                if(mf[tid]==1 and ymin>=line2):
+                    mf[tid]=2
+                    exit_frame[tid]=frame_num
+                    max_tid=max(max_tid,tid)
 
+        
         # calculate frames per second of running detections
         fps = 1.0 / (time.time() - start_time)
         print("FPS: %.2f" % fps)
@@ -232,6 +279,8 @@ def main(_argv):
         if FLAGS.output:
             out.write(result)
         if cv2.waitKey(1) & 0xFF == ord('q'): break
+
+    print_speeds(max_v,max_tid,dist,enter_frame,exit_frame,mf,mfps)
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
