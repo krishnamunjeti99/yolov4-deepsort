@@ -66,9 +66,9 @@ def main(_argv):
     print("halo :D test 2\n")
     
     #distance and pixel line declarations
-    dist=100
-    line1=400
-    line2=800
+    dist=10
+    line1=198
+    line2=268
     
     # Definition of the parameters
     max_cosine_distance = 0.4
