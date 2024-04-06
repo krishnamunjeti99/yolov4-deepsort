@@ -261,10 +261,10 @@ def main(_argv):
             cv2.rectangle(frame, (int(bbox[0]), int(bbox[1]-30)), (int(bbox[0])+(len(class_name)+len(str(track.track_id)))*17, int(bbox[1])), color, -1)
             cv2.putText(frame, class_name + "-" + str(track.track_id),(int(bbox[0]), int(bbox[1]-10)),0, 0.75, (255,255,255),2)
         #draw lines
-            cv2.line(frame, (172, 198), (774, 198), red_color, 2)
-            cv2.putText(frame, ('LINE 1'), (172, 198), cv2.FONT_HERSHEY_SIMPLEX, 0.5, text_color, 1, cv2.LINE_AA)
-            cv2.line(frame, (8, 268), (927, 268), blue_color, 2)
-            cv2.putText(frame, ('LINE 2'), (8, 268), cv2.FONT_HERSHEY_SIMPLEX, 0.5, text_color, 1, cv2.LINE_AA)
+            cv2.line(frame, (172, 198), (774, 198), (0, 0, 255), 2)
+            cv2.putText(frame, ('LINE 1'), (172, 198), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 1, cv2.LINE_AA)
+            cv2.line(frame, (8, 268), (927, 268), (255, 0, 0), 2)
+            cv2.putText(frame, ('LINE 2'), (8, 268), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 1, cv2.LINE_AA)
 
         # if enable info flag then print details about each track
             if FLAGS.info:
