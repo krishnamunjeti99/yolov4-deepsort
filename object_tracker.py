@@ -54,9 +54,11 @@ def init_array(n,k):
 def print_speeds(max_v,max_tid,dist,enter_frame,exit_frame,mf,mfps):
     j=0
     while(j<max_v and j<=max_tid):
-        if(mf[tid]==2):
-            speed=get_speed(dist,enter_frame[tid],exit_frame[tid],mfps)
-            print("speed of vehicle id : "+str(tid) + " is " + str(speed) + "\n")
+        if(mf[j]==2):
+            speed=get_speed(dist,enter_frame[j],exit_frame[j],mfps)
+            print("speed of vehicle id : "+str(j) + " is " + str(speed) + "\n")
+        j=j+1
+        
 def main(_argv):
     print("halo :D test 2\n")
     # Definition of the parameters
@@ -128,6 +130,7 @@ def main(_argv):
     line2=1000
 
     print("resolution is "+ str(height) + " x " + str(width) + "\n")
+    print("fps is " + str(mfps) + "\n")
     # while video is running
     while True:
         return_value, frame = vid.read()
