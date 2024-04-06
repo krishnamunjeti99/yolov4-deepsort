@@ -41,6 +41,8 @@ flags.DEFINE_boolean('count', False, 'count objects being tracked on screen')
 def get_speed(dist,frame1,frame2,fps):
     t=frame2-frame1
     speed=(dist*fps)/t
+    speed=speed*60*60 
+    speed=speed/1000
     return speed
 
 def init_array(n,k):
@@ -125,7 +127,7 @@ def main(_argv):
     exit_frame=init_array(max_v,-1)
     mf=init_array(max_v,0)
     max_tid=-1
-    dist=0.5
+    dist=100
     line1=500
     line2=1000
 
